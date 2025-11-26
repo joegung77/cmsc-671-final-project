@@ -6,7 +6,7 @@ import pickle
 
 print("Initializing user score dict...")
 
-df = pandas.read_csv("users-score-2023.csv")
+df = pandas.read_csv("backend/users-score-2023.csv")
 
 user_dict = {
     user: dict(zip(group["anime_id"], group["rating"]))

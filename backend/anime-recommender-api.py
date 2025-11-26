@@ -21,8 +21,9 @@ def get_anime():
         next(reader)
 
         for row in reader:
+            id = row[0]
             name = row[1]
             english_name = row[2]
             image_url = row[23]
-            anime_list.append({"name": name, "english_name": english_name, "image_url": image_url})
+            anime_list.append({"id": id, "name": name, "english_name": english_name, "image_url": image_url})
     return anime_list

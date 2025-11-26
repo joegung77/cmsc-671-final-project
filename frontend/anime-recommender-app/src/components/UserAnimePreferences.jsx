@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react'
-import "./App.css"
+import "../AnimeRecommender.css"
 
-function App() {
+function UserAnimePreferences({next, back}) {
   const [animeList, setAnimeList] = useState([]);
   const [filteredAnimeList, setFilteredAnimeList] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [search, setSearch] = useState("");
+  const [likedAnimes, setLikedAnimes] = useState([]);
+  const [dislikedAnimes, setDislikedAnimes] = useState([]);
 
   useEffect(() => {
     fetch("http://127.0.0.1:8000/anime")
@@ -28,12 +30,9 @@ function App() {
   }, [search, animeList])
 
   const itemsPerPage = 5;
-
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
-
   const currentItems = filteredAnimeList.slice(startIndex, endIndex);
-
   const totalPages = Math.ceil(filteredAnimeList.length / itemsPerPage);
 
   return (
@@ -44,18 +43,68 @@ function App() {
         value={search}
         onChange={(e) => setSearch(e.target.value)}
       />
+
       <h1>Anime List</h1>
+
+      <p>
+        {likedAnimes}
+      </p>
+
+      <p>
+        {dislikedAnimes}
+      </p>
+
       <ul>
         {currentItems.map((anime) => (
           <li key={anime.name} className="anime-list-item">
+
+            <button onClick={() => {
+              const id = anime.id;
+
+              if (likedAnimes.includes(id)) {
+                // If anime is already liked, remove it from liked
+                setLikedAnimes(previousLikedAnimes => previousLikedAnimes.filter(animeId => animeId !== id))
+              } else {
+                setLikedAnimes([...likedAnimes, id])
+
+                // If anime is in disliked array, remove it since we added to liked
+                if (dislikedAnimes.includes(id)) {
+                  setDislikedAnimes(previousDislikedAnimes => previousDislikedAnimes.filter(animeId => animeId !== id))
+                }
+              }
+            }}>
+              Thumbs up
+            </button>
+
+            <button onClick={() => {
+              const id = anime.id;
+
+              if (dislikedAnimes.includes(id)) {
+                // If anime is already disliked, remove it from disliked
+                setDislikedAnimes(previousDislikedAnimes => previousDislikedAnimes.filter(animeId => animeId !== id))
+              } else {
+                setDislikedAnimes([...dislikedAnimes, id])
+
+                // If anime is in liked array, remove it since we added to disliked
+                if (likedAnimes.includes(id)) {
+                  setLikedAnimes(previousLikedAnimes => previousLikedAnimes.filter(animeId => animeId !== id))
+                }
+              }
+            }}>
+              Thumbs down
+            </button>
+
             <img src={anime.image_url} alt={anime.name} style={{ width: "100px" }} />
             <p>{anime.name}</p>
           </li>
         ))}
       </ul>
 
-            {/* Pagination Buttons */}
-            <div style={{ marginTop: "20px" }}>
+      <div style={{ 
+        marginTop: "20px",
+        marginBottom:"20px"
+      }}>
+
         <button
           onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
           disabled={currentPage === 1}
@@ -63,7 +112,7 @@ function App() {
           Previous
         </button>
 
-        <span style={{ margin: "0 10px" }}>
+        <span style={{ margin: "10px" }}>
           Page {currentPage} of {totalPages}
         </span>
 
@@ -73,10 +122,13 @@ function App() {
         >
           Next
         </button>
-      </div>
-    </div>
-  )
 
+      </div>
+
+      <button onClick={back}>Back</button>
+
+    </div>
+  );
 }
 
-export default App
+export default UserAnimePreferences

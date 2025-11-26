@@ -1,10 +1,10 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
-import AppTest from './AppTest.jsx'
+import AnimeRecommender from './AnimeRecommender.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <AppTest />
+    <AnimeRecommender />
   </StrictMode>,
 )

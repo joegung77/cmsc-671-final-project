@@ -1,6 +1,22 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from pydantic import BaseModel
+from typing import List
 import csv
+
+class AnimeRecommendationRequest(BaseModel):
+    genres: List[str]
+    minimum_score: int
+    maximum_score: int
+    minimum_episodes: int
+    maximum_episodes: int
+    minimum_year: int
+    maximum_year: int
+    types: List[str]
+    minimum_members: int
+    maximum_members: int
+    liked_anime_ids: List[int]
+    disliked_anime_ids: List[int]
 
 app = FastAPI()
 
@@ -10,6 +26,12 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+@app.post("/test")
+def test(data: AnimeRecommendationRequest):
+    print(data)
+    return {"success": True}
+
 
 @app.get("/anime")
 def get_anime():

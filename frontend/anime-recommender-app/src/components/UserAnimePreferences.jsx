@@ -1,15 +1,49 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import "../AnimeRecommender.css"
 import LikeIcon from "../icons/thumbs_up.png"
 import DislikeIcon from "../icons/thumbs_down.png"
+import axios from 'axios';
+import { GlobalContext } from '../GlobalState';
 
 function UserAnimePreferences({next, back}) {
+  const [search, setSearch] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
   const [animeList, setAnimeList] = useState([]);
   const [filteredAnimeList, setFilteredAnimeList] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [search, setSearch] = useState("");
-  const [likedAnimes, setLikedAnimes] = useState([]);
-  const [dislikedAnimes, setDislikedAnimes] = useState([]);
+
+  const { genreList, setGenreList} = useContext(GlobalContext);
+  const { minScore, setMinScore} = useContext(GlobalContext);
+  const { maxScore, setMaxScore } = useContext(GlobalContext);
+  const { minEpisodes, setMinEpisodes } = useContext(GlobalContext);
+  const { maxEpisodes, setMaxEpisodes } = useContext(GlobalContext);
+  const { minYear, setMinYear } = useContext(GlobalContext);
+  const { maxYear, setMaxYear } = useContext(GlobalContext);
+  const { typeList, setTypeList } = useContext(GlobalContext);
+  const { minMembers, setMinMembers } = useContext(GlobalContext);
+  const { maxMembers, setMaxMembers } = useContext(GlobalContext);
+
+
+  const { likedAnimes, setLikedAnimes } = useContext(GlobalContext);
+  const { dislikedAnimes, setDislikedAnimes } = useContext(GlobalContext);
+
+  const test = async () => {
+    const response = await axios.post("http://127.0.0.1:8000/test", {
+          genres: genreList,
+          minimum_score: minScore,
+          maximum_score: maxScore,
+          minimum_episodes: minEpisodes,
+          maximum_episodes: maxEpisodes,
+          minimum_year: minYear,
+          maximum_year: maxYear,
+          types: typeList,
+          minimum_members: minMembers,
+          maximum_members: maxMembers,
+          liked_anime_ids: likedAnimes.map(Number),
+          disliked_anime_ids: dislikedAnimes.map(Number)
+    });
+
+    console.log(response.data)
+  };
 
   useEffect(() => {
     fetch("http://127.0.0.1:8000/anime")
@@ -39,7 +73,6 @@ function UserAnimePreferences({next, back}) {
 
   return (
     <div className="form">
-
       <h2>Anime Preferences</h2>
 
       <p>
@@ -129,6 +162,8 @@ function UserAnimePreferences({next, back}) {
         </button>
 
       </div>
+
+      <button onClick={test}>Test</button>
 
       <button onClick={back}>Back</button>
 

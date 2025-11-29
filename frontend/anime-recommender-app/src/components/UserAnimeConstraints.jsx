@@ -1,27 +1,31 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react';
+import { GlobalContext } from '../GlobalState';
 
 function UserAnimeConstraints({next, back}) {
-    const [genreList, setGenreList] = useState([]);
-    const [minScore, setMinScore] = useState(1);
-    const [maxScore, setMaxScore] = useState(10);
-    const [minEpisodes, setMinEpisodes] = useState(1);
-    const [maxEpisodes, setMaxEpisodes] = useState(4000);
-    const [minYear, setMinYear] = useState(1960);
-    const [maxYear, setMaxYear] = useState(2025);
-    const [typeList, setTypeList] = useState([]);
-    const [minMembers, setMinMembers] = useState(0);
-    const [maxMembers, setMaxMembers] = useState(10000000)
+    const [availableGenreList, setAvailableGenreList] = useState([]);
+    const [availableTypeList, setAvailableTypeList] = useState([]);
+
+    const { genreList, setGenreList} = useContext(GlobalContext);
+    const { minScore, setMinScore} = useContext(GlobalContext);
+    const { maxScore, setMaxScore } = useContext(GlobalContext);
+    const { minEpisodes, setMinEpisodes } = useContext(GlobalContext);
+    const { maxEpisodes, setMaxEpisodes } = useContext(GlobalContext);
+    const { minYear, setMinYear } = useContext(GlobalContext);
+    const { maxYear, setMaxYear } = useContext(GlobalContext);
+    const { typeList, setTypeList } = useContext(GlobalContext);
+    const { minMembers, setMinMembers } = useContext(GlobalContext);
+    const { maxMembers, setMaxMembers } = useContext(GlobalContext);
 
 
     useEffect(() => {
         fetch("http://127.0.0.1:8000/genre")
             .then((res) => res.json())
-            .then((data) => setGenreList(data))
+            .then((data) => setAvailableGenreList(data))
             .catch((err) => console.error(err));
 
         fetch("http://127.0.0.1:8000/type")
             .then((res) => res.json())
-            .then((data) => setTypeList(data))
+            .then((data) => setAvailableTypeList(data))
             .catch((err) => console.error(err));
       }, []);
 
@@ -33,9 +37,19 @@ function UserAnimeConstraints({next, back}) {
                 Genre:
             </p>
             <ul style={{ listStyle: "none"}}>
-                {genreList.map((genre) => (
+                {availableGenreList.map((genre) => (
                     <li key={genre}>
-                        <input type="checkbox"/>{genre}
+                        <input 
+                            type="checkbox"
+                            checked={genreList.includes(genre)}
+                            onChange={() => {
+                                if (!genreList.includes(genre)) {
+                                    setGenreList([...genreList, genre])
+                                } else {
+                                    setGenreList(previousGenreList => previousGenreList.filter(previousGenre => previousGenre !== genre))
+                                }
+                            }}
+                        />{genre}
                     </li>
                 ))}
             </ul>
@@ -113,9 +127,19 @@ function UserAnimeConstraints({next, back}) {
                 Type:
             </p>
             <ul style={{ listStyle: "none"}}>
-                {typeList.map((type) => (
+                {availableTypeList.map((type) => (
                     <li key={type}>
-                        <input type="checkbox"/>{type}
+                        <input 
+                            type="checkbox"
+                            checked={typeList.includes(type)}
+                            onChange={() => {
+                                if (!typeList.includes(type)) {
+                                    setTypeList([...typeList, type])
+                                } else {
+                                    setTypeList(previousTypeList => previousTypeList.filter(previousType => previousType !== type))
+                                }
+                            }}
+                        />{type}
                     </li>
                 ))}
             </ul>

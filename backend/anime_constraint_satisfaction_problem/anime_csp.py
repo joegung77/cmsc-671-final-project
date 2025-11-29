@@ -223,7 +223,6 @@ def run_csp(path, filters: AnimeFilters, limit=50):
 
 def main():
     parser = argparse.ArgumentParser(description="Anime CSP Filter")
-    parser.add_argument("--data", required=True)
     parser.add_argument("--genres")
     parser.add_argument("--min-score", type=float)
     parser.add_argument("--max-score", type=float)
@@ -252,7 +251,7 @@ def main():
         min_scored_by=args.min_scored_by,
     )
 
-    results = run_csp(args.data, filters, args.limit)
+    results = run_csp("../anime-dataset-2023.csv", filters, args.limit)
 
     print(f"\nFound {len(results)} anime:\n")
     for i, row in enumerate(results, 1):

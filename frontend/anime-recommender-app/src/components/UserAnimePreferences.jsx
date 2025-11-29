@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import "../AnimeRecommender.css"
+import LikeIcon from "../icons/thumbs_up.png"
+import DislikeIcon from "../icons/thumbs_down.png"
 
 function UserAnimePreferences({next, back}) {
   const [animeList, setAnimeList] = useState([]);
@@ -36,7 +38,14 @@ function UserAnimePreferences({next, back}) {
   const totalPages = Math.ceil(filteredAnimeList.length / itemsPerPage);
 
   return (
-    <div>
+    <div className="form">
+
+      <h2>Anime Preferences</h2>
+
+      <p>
+        Search
+      </p>
+
       <input
         type="text"
         placerholder="Search anime by title"
@@ -44,21 +53,14 @@ function UserAnimePreferences({next, back}) {
         onChange={(e) => setSearch(e.target.value)}
       />
 
-      <h1>Anime List</h1>
-
-      <p>
-        {likedAnimes}
-      </p>
-
-      <p>
-        {dislikedAnimes}
-      </p>
-
       <ul>
         {currentItems.map((anime) => (
-          <li key={anime.name} className="anime-list-item">
+          <li key={anime.id} className="anime-list-item">
 
-            <button onClick={() => {
+            {/* Like Button */}
+            <button style={{
+              outline: likedAnimes.includes(anime.id) ? "3px solid yellow" : "none"
+            }} onClick={() => {
               const id = anime.id;
 
               if (likedAnimes.includes(id)) {
@@ -73,10 +75,13 @@ function UserAnimePreferences({next, back}) {
                 }
               }
             }}>
-              Thumbs up
+              <img src={LikeIcon}/>
             </button>
 
-            <button onClick={() => {
+            {/* Dislike Button */}
+            <button style={{
+              outline: dislikedAnimes.includes(anime.id) ? "3px solid yellow" : "none"
+            }} onClick={() => {
               const id = anime.id;
 
               if (dislikedAnimes.includes(id)) {
@@ -91,10 +96,10 @@ function UserAnimePreferences({next, back}) {
                 }
               }
             }}>
-              Thumbs down
+              <img src={DislikeIcon}/>
             </button>
 
-            <img src={anime.image_url} alt={anime.name} style={{ width: "100px" }} />
+            <img src={anime.image_url} alt={anime.name} style={{ width: "130px" }} />
             <p>{anime.name}</p>
           </li>
         ))}

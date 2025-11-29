@@ -3,8 +3,8 @@ import React, { useState, useEffect } from 'react'
 function UserDetails({next}) {
 
     return (
-        <div>
-            <h1>User Details</h1>
+        <div className="form">
+            <h2>User Details</h2>
             <button onClick={next}>Next</button>
         </div>
     );

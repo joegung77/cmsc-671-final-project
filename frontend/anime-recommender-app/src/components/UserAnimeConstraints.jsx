@@ -15,6 +15,7 @@ function UserAnimeConstraints({next, back}) {
     const { typeList, setTypeList } = useContext(GlobalContext);
     const { minMembers, setMinMembers } = useContext(GlobalContext);
     const { maxMembers, setMaxMembers } = useContext(GlobalContext);
+    const { minScoredBy, setMinScoredBy } = useContext(GlobalContext);
 
 
     useEffect(() => {
@@ -166,6 +167,18 @@ function UserAnimeConstraints({next, back}) {
                 value={maxMembers}
                 onChange={e => setMaxMembers(Number(e.target.value))}
             />
+
+            <br/>
+            <br/>
+
+            <p>
+                Minumum Scored By
+            </p>
+            <input 
+                type="number" 
+                value={minScoredBy}
+                onChange={e => setMinScoredBy(Number(e.target.value))}
+            />            
 
             <br/>
             <br/>

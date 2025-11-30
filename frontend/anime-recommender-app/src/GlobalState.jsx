@@ -13,8 +13,9 @@ export function GlobalProvider({ children }) {
     const [typeList, setTypeList] = useState([]);
     const [minMembers, setMinMembers] = useState(0);
     const [maxMembers, setMaxMembers] = useState(10000000);
-    const [ likedAnimes, setLikedAnimes ] = useState([]);
-    const [ dislikedAnimes, setDislikedAnimes ] = useState([]);
+    const [minScoredBy, setMinScoredBy] = useState(0);
+    const [likedAnimes, setLikedAnimes] = useState([]);
+    const [dislikedAnimes, setDislikedAnimes] = useState([]);
 
     return (
         <GlobalContext.Provider value={{ 
@@ -38,6 +39,8 @@ export function GlobalProvider({ children }) {
             setMinMembers,
             maxMembers,
             setMaxMembers,
+            minScoredBy,
+            setMinScoredBy,
             likedAnimes,
             setLikedAnimes,
             dislikedAnimes,

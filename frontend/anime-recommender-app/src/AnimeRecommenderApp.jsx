@@ -3,6 +3,7 @@ import UserDetails from "./components/UserDetails";
 import UserAnimeConstraints from "./components/UserAnimeConstraints";
 import UserAnimePreferences from "./components/UserAnimePreferences";
 import { GlobalProvider } from './GlobalState';
+import UserAnimeRecommendations from './components/UserAnimeRecommendations';
 
 function AnimeRecommenderApp() {
     const [form, setForm] = useState(0);
@@ -21,6 +22,9 @@ function AnimeRecommenderApp() {
                 )}
                 {form === 2 && (
                     <UserAnimePreferences next={next} back={back}/>
+                )}
+                {form === 3 && (
+                    <UserAnimeRecommendations next={next} back={back}/>
                 )}
             </GlobalProvider>
         </div>

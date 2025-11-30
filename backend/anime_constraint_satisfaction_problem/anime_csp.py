@@ -210,7 +210,7 @@ def build_csp(df: pd.DataFrame, filters: AnimeFilters):
     return csp
 
 
-def run_csp(path, filters: AnimeFilters, limit=50):
+def run_csp(path, filters: AnimeFilters, limit):
     df = load_dataset(path)
     csp = build_csp(df, filters)
     sols = csp.solve(max_solutions=limit)

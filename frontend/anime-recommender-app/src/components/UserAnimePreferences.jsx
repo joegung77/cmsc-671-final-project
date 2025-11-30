@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useContext } from 'react'
-import "../AnimeRecommender.css"
-import LikeIcon from "../icons/thumbs_up.png"
-import DislikeIcon from "../icons/thumbs_down.png"
+import React, { useState, useEffect, useContext } from 'react';
+import "../AnimeRecommender.css";
+import LikeIcon from "../icons/thumbs_up.png";
+import DislikeIcon from "../icons/thumbs_down.png";
 import axios from 'axios';
 import { GlobalContext } from '../GlobalState';
 
@@ -11,7 +11,7 @@ function UserAnimePreferences({next, back}) {
   const [animeList, setAnimeList] = useState([]);
   const [filteredAnimeList, setFilteredAnimeList] = useState([]);
 
-  const { genreList, setGenreList} = useContext(GlobalContext);
+  const { genreList, setGenreList } = useContext(GlobalContext);
   const { minScore, setMinScore} = useContext(GlobalContext);
   const { maxScore, setMaxScore } = useContext(GlobalContext);
   const { minEpisodes, setMinEpisodes } = useContext(GlobalContext);
@@ -21,8 +21,7 @@ function UserAnimePreferences({next, back}) {
   const { typeList, setTypeList } = useContext(GlobalContext);
   const { minMembers, setMinMembers } = useContext(GlobalContext);
   const { maxMembers, setMaxMembers } = useContext(GlobalContext);
-
-
+  const { minScoredBy, setMinScoredBy } = useContext(GlobalContext);
   const { likedAnimes, setLikedAnimes } = useContext(GlobalContext);
   const { dislikedAnimes, setDislikedAnimes } = useContext(GlobalContext);
 
@@ -38,6 +37,7 @@ function UserAnimePreferences({next, back}) {
           types: typeList,
           minimum_members: minMembers,
           maximum_members: maxMembers,
+          minimum_scored_by: minScoredBy,
           liked_anime_ids: likedAnimes.map(Number),
           disliked_anime_ids: dislikedAnimes.map(Number)
     });
@@ -166,6 +166,7 @@ function UserAnimePreferences({next, back}) {
       <button onClick={test}>Test</button>
 
       <button onClick={back}>Back</button>
+      <button onClick={next}>Next</button>
 
     </div>
   );

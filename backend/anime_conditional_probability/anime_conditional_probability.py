@@ -8,7 +8,6 @@ def conditional_probability(queried_anime_ids, observed_anime_ids):
 
     with open("user_dict.pkl", "rb") as f:
         user_dict = pickle.load(f)
-        print(user_dict)
         # get array of users that are invalid for the query
         invalid_users = []
         for user_id in user_dict:

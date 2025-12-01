@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import UserDetails from "./components/UserDetails";
+import UserWelcome from "./components/UserWelcome";
 import UserAnimeConstraints from "./components/UserAnimeConstraints";
 import UserAnimePreferences from "./components/UserAnimePreferences";
 import { GlobalProvider } from './GlobalState';
@@ -15,7 +15,7 @@ function AnimeRecommenderApp() {
         <div>
             <GlobalProvider>
                 {form === 0 && (
-                    <UserDetails next={next}/>
+                    <UserWelcome next={next}/>
                 )}
                 {form === 1 && (
                     <UserAnimeConstraints next={next} back={back}/>

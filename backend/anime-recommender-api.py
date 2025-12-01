@@ -16,9 +16,6 @@ class AnimeRecommendationRequest(BaseModel):
     minimum_year: int
     maximum_year: int
     types: List[str]
-    minimum_members: int
-    maximum_members: int
-    minimum_scored_by: int
     liked_anime_ids: List[int]
     disliked_anime_ids: List[int]
 
@@ -41,9 +38,7 @@ def get_anime_recommendations(data: AnimeRecommendationRequest):
         max_episodes=data.maximum_episodes,
         min_year=data.minimum_year,
         max_year=data.maximum_year,
-        type_in=data.types,
-        min_members=data.minimum_members,
-        min_scored_by=data.minimum_scored_by
+        type_in=data.types
     )
 
     liked_anime_ids = data.liked_anime_ids
@@ -106,8 +101,33 @@ def get_anime():
             id = row[0]
             name = row[1]
             english_name = row[2]
+            score = row[4]
+            genres = row[5]
+            synopsis = row[6]
+            type = row[7]
+            episodes = row[8]
+            aired= row[9]
+            scored_by = row[21]
+            members = row[22]
             image_url = row[23]
-            anime_list.append({"id": id, "name": name, "english_name": english_name, "image_url": image_url})
+            
+            # Exclude Hentai Animes
+            if "Hentai" in genres:
+                continue
+            anime_list.append({
+                "id": id, 
+                "name": name, 
+                "english_name":english_name,
+                "score": score,
+                "genres": genres, 
+                "synopsis": synopsis,
+                "type": type,
+                "episodes": episodes,
+                "aired": aired,
+                "scored_by": scored_by,
+                "members": members,
+                "image_url": image_url
+            })
     
     return anime_list
 
@@ -128,6 +148,10 @@ def get_genre():
                 if (genre_stripped not in genre_list):
                     genre_list.append(genre_stripped)
 
+    # Remove Hentai and UNKNOWN
+    genre_list.remove("Hentai")
+    genre_list.remove("UNKNOWN")
+
     return genre_list
 
 @app.get("/type")
@@ -144,7 +168,7 @@ def get_type():
             for type in types:
                 # remove spaces at beginning and end of type string
                 type_stripped = type.strip()
-                if (type not in type_list):
+                if (type not in type_list and type != "UNKNOWN"):
                     type_list.append(type_stripped)
 
     return type_list

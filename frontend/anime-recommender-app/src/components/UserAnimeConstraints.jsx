@@ -32,7 +32,9 @@ function UserAnimeConstraints({next, back}) {
 
     return (
         <div className="form">
-            <h2>User Anime Constraints</h2>
+            <h1>User Anime Constraints</h1>
+
+            <p>Define constraints for your Anime recommendations</p>
 
             <p>
                 Genre:
@@ -147,45 +149,8 @@ function UserAnimeConstraints({next, back}) {
 
             <br/>
 
-            <p>
-                Minimum Members
-            </p>
-            <input 
-                type="number" 
-                value={minMembers}
-                onChange={e => setMinMembers(Number(e.target.value))}
-            />
-
-            <br/>
-            <br/>
-
-            <p>
-                Maximum Members
-            </p>
-            <input 
-                type="number" 
-                value={maxMembers}
-                onChange={e => setMaxMembers(Number(e.target.value))}
-            />
-
-            <br/>
-            <br/>
-
-            <p>
-                Minumum Scored By
-            </p>
-            <input 
-                type="number" 
-                value={minScoredBy}
-                onChange={e => setMinScoredBy(Number(e.target.value))}
-            />            
-
-            <br/>
-            <br/>
-            <br/>
-
             <button onClick={back}>Back</button>
-            <button onClick={next}>Next</button>
+            <button style={{marginLeft: "15px"}} onClick={next}>Next</button>
             
         </div>
     );

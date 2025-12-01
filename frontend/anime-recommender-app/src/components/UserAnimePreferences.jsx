@@ -2,7 +2,6 @@ import React, { useState, useEffect, useContext } from 'react';
 import "../AnimeRecommender.css";
 import LikeIcon from "../icons/thumbs_up.png";
 import DislikeIcon from "../icons/thumbs_down.png";
-import axios from 'axios';
 import { GlobalContext } from '../GlobalState';
 
 function UserAnimePreferences({next, back}) {
@@ -11,39 +10,10 @@ function UserAnimePreferences({next, back}) {
   const [animeList, setAnimeList] = useState([]);
   const [filteredAnimeList, setFilteredAnimeList] = useState([]);
 
-  const { genreList, setGenreList } = useContext(GlobalContext);
-  const { minScore, setMinScore} = useContext(GlobalContext);
-  const { maxScore, setMaxScore } = useContext(GlobalContext);
-  const { minEpisodes, setMinEpisodes } = useContext(GlobalContext);
-  const { maxEpisodes, setMaxEpisodes } = useContext(GlobalContext);
-  const { minYear, setMinYear } = useContext(GlobalContext);
-  const { maxYear, setMaxYear } = useContext(GlobalContext);
-  const { typeList, setTypeList } = useContext(GlobalContext);
-  const { minMembers, setMinMembers } = useContext(GlobalContext);
-  const { maxMembers, setMaxMembers } = useContext(GlobalContext);
-  const { minScoredBy, setMinScoredBy } = useContext(GlobalContext);
   const { likedAnimes, setLikedAnimes } = useContext(GlobalContext);
   const { dislikedAnimes, setDislikedAnimes } = useContext(GlobalContext);
-
-  const test = async () => {
-    const response = await axios.post("http://127.0.0.1:8000/test", {
-          genres: genreList,
-          minimum_score: minScore,
-          maximum_score: maxScore,
-          minimum_episodes: minEpisodes,
-          maximum_episodes: maxEpisodes,
-          minimum_year: minYear,
-          maximum_year: maxYear,
-          types: typeList,
-          minimum_members: minMembers,
-          maximum_members: maxMembers,
-          minimum_scored_by: minScoredBy,
-          liked_anime_ids: likedAnimes.map(Number),
-          disliked_anime_ids: dislikedAnimes.map(Number)
-    });
-
-    console.log(response.data)
-  };
+  const { likedAnimeNames, setLikedAnimeNames } = useContext(GlobalContext);
+  const { dislikedAnimeNames, setDislikedAnimeNames } = useContext(GlobalContext);
 
   useEffect(() => {
     fetch("http://127.0.0.1:8000/anime")
@@ -73,18 +43,28 @@ function UserAnimePreferences({next, back}) {
 
   return (
     <div className="form">
-      <h2>Anime Preferences</h2>
+      <h1>User Anime Preferences</h1>
 
-      <p>
-        Search
-      </p>
+      <p>Give a thumbs up or thumbs down for Animes you already like or dislike</p>
 
-      <input
-        type="text"
-        placerholder="Search anime by title"
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
-      />
+      <div style={{
+        display: "flex",
+        alignItems: "center"
+      }}>
+        <p>
+          Search:
+        </p>
+
+        <input
+          type="text"
+          placerholder="Search anime by title"
+          value={search}
+          style={{marginLeft: "20px"}}
+          onChange={(e) => setSearch(e.target.value)}
+        />
+
+      </div>
+
 
       <ul>
         {currentItems.map((anime) => (
@@ -95,16 +75,20 @@ function UserAnimePreferences({next, back}) {
               outline: likedAnimes.includes(anime.id) ? "3px solid yellow" : "none"
             }} onClick={() => {
               const id = anime.id;
+              const name = anime.name;
 
               if (likedAnimes.includes(id)) {
                 // If anime is already liked, remove it from liked
-                setLikedAnimes(previousLikedAnimes => previousLikedAnimes.filter(animeId => animeId !== id))
+                setLikedAnimes(previousLikedAnimes => previousLikedAnimes.filter(animeId => animeId !== id));
+                setLikedAnimeNames(previousLikedAnimeNames => previousLikedAnimeNames.filter(animeName => animeName !== name));
               } else {
-                setLikedAnimes([...likedAnimes, id])
+                setLikedAnimes([...likedAnimes, id]);
+                setLikedAnimeNames([...likedAnimeNames, name]);
 
                 // If anime is in disliked array, remove it since we added to liked
                 if (dislikedAnimes.includes(id)) {
-                  setDislikedAnimes(previousDislikedAnimes => previousDislikedAnimes.filter(animeId => animeId !== id))
+                  setDislikedAnimes(previousDislikedAnimes => previousDislikedAnimes.filter(animeId => animeId !== id));
+                  setDislikedAnimeNames(previousDislikedAnimeNames => previousDislikedAnimeNames.filter(animeName => animeName !== name));
                 }
               }
             }}>
@@ -116,24 +100,37 @@ function UserAnimePreferences({next, back}) {
               outline: dislikedAnimes.includes(anime.id) ? "3px solid yellow" : "none"
             }} onClick={() => {
               const id = anime.id;
+              const name = anime.name;
 
               if (dislikedAnimes.includes(id)) {
                 // If anime is already disliked, remove it from disliked
-                setDislikedAnimes(previousDislikedAnimes => previousDislikedAnimes.filter(animeId => animeId !== id))
+                setDislikedAnimes(previousDislikedAnimes => previousDislikedAnimes.filter(animeId => animeId !== id));
+                setDislikedAnimeNames(previousDislikedAnimeNames => previousDislikedAnimeNames.filter(animeName => animeName !== name));
               } else {
-                setDislikedAnimes([...dislikedAnimes, id])
+                setDislikedAnimes([...dislikedAnimes, id]);
+                setDislikedAnimeNames([...dislikedAnimeNames, name]);
 
                 // If anime is in liked array, remove it since we added to disliked
                 if (likedAnimes.includes(id)) {
-                  setLikedAnimes(previousLikedAnimes => previousLikedAnimes.filter(animeId => animeId !== id))
+                  setLikedAnimes(previousLikedAnimes => previousLikedAnimes.filter(animeId => animeId !== id));
+                  setLikedAnimeNames(previousLikedAnimeNames => previousLikedAnimeNames.filter(animeName => animeName !== name));
                 }
               }
             }}>
               <img src={DislikeIcon}/>
             </button>
 
-            <img src={anime.image_url} alt={anime.name} style={{ width: "130px" }} />
-            <p>{anime.name}</p>
+            <img src={anime.image_url} alt={anime.name} style={{ width: "250px" }} />
+            <div>
+              <h2><u>{anime.name}</u></h2>
+              <p><b>English Name:</b> {anime.english_name}</p>
+              <p><b>Score:</b> {anime.score}</p>
+              <p><b>Genres:</b> {anime.genres}</p>
+              <p><b>Synopsis:</b> {anime.synopsis}</p>
+              <p><b>Type:</b> {anime.type}</p>
+              <p><b>Episodes:</b> {Math.round(anime.episodes)}</p>
+              <p><b>Aired:</b> {anime.aired}</p>
+            </div>
           </li>
         ))}
       </ul>
@@ -161,12 +158,40 @@ function UserAnimePreferences({next, back}) {
           Next
         </button>
 
+        <br/>
+        <br/>
+
+        {likedAnimeNames.length > 0 && (
+          <div>
+            <b>Liked Animes:</b>
+            <ul>
+              {likedAnimeNames.map((animeName) => (
+                <p>{animeName}</p>
+              ))}
+            </ul>
+          </div>
+        )}
+
+
+        <br/>
+        <br/>
+
+        {dislikedAnimeNames.length > 0 && (
+          <div>
+            <b>Disliked Animes:</b>
+            <ul>
+              {dislikedAnimeNames.map((animeName) => (
+                <p>{animeName}</p>
+              ))}
+            </ul>
+          </div>
+        )}
+
+
       </div>
 
-      <button onClick={test}>Test</button>
-
       <button onClick={back}>Back</button>
-      <button onClick={next}>Next</button>
+      <button style={{marginLeft: "15px"}} onClick={next}>Next</button>
 
     </div>
   );

@@ -11,11 +11,10 @@ export function GlobalProvider({ children }) {
     const [minYear, setMinYear] = useState(1960);
     const [maxYear, setMaxYear] = useState(2025);
     const [typeList, setTypeList] = useState([]);
-    const [minMembers, setMinMembers] = useState(0);
-    const [maxMembers, setMaxMembers] = useState(10000000);
-    const [minScoredBy, setMinScoredBy] = useState(0);
     const [likedAnimes, setLikedAnimes] = useState([]);
     const [dislikedAnimes, setDislikedAnimes] = useState([]);
+    const [likedAnimeNames, setLikedAnimeNames] = useState([]);
+    const [dislikedAnimeNames, setDislikedAnimeNames] = useState([]);
 
     return (
         <GlobalContext.Provider value={{ 
@@ -35,16 +34,14 @@ export function GlobalProvider({ children }) {
             setMaxYear,
             typeList,
             setTypeList,
-            minMembers,
-            setMinMembers,
-            maxMembers,
-            setMaxMembers,
-            minScoredBy,
-            setMinScoredBy,
             likedAnimes,
             setLikedAnimes,
             dislikedAnimes,
-            setDislikedAnimes
+            setDislikedAnimes,
+            likedAnimeNames,
+            setLikedAnimeNames,
+            dislikedAnimeNames,
+            setDislikedAnimeNames
         }}>
             {children}
         </GlobalContext.Provider>

@@ -1,14 +1,13 @@
 .form {
-  margin-left: 100px
+  margin-left: 100px;
+  margin-right: 500px;
+  margin-bottom: 100px;
+  margin-top: 100px;
 }
 
 .anime-list-item {
   display: flex;
   align-items: center;
   gap: 15px;
-  margin-bottom: 15px;
-}
-
-.thumbs-up-down-class {
-  position: relative
+  margin-bottom: 75px;
 }

@@ -12,9 +12,6 @@ function UserAnimeRecommendations({back}) {
     const { minYear } = useContext(GlobalContext);
     const { maxYear } = useContext(GlobalContext);
     const { typeList } = useContext(GlobalContext);
-    const { minMembers } = useContext(GlobalContext);
-    const { maxMembers } = useContext(GlobalContext);
-    const { minScoredBy} = useContext(GlobalContext);
     const { likedAnimes } = useContext(GlobalContext);
     const { dislikedAnimes } = useContext(GlobalContext);
 
@@ -34,9 +31,6 @@ function UserAnimeRecommendations({back}) {
                 minimum_year: minYear,
                 maximum_year: maxYear,
                 types: typeList,
-                minimum_members: minMembers,
-                maximum_members: maxMembers,
-                minimum_scored_by: minScoredBy,
                 liked_anime_ids: likedAnimes.map(Number),
                 disliked_anime_ids: dislikedAnimes.map(Number)
           });
@@ -58,7 +52,8 @@ function UserAnimeRecommendations({back}) {
     if (loading) {
         return (
             <div className="form">
-                <h3>Getting Anime Recommendations...</h3>
+                <p>Getting Anime Recommendations...</p>
+                <p>May take up to 1-2 minutes</p>
                 <button onClick={back}>Back</button>
             </div>
         );
@@ -66,14 +61,39 @@ function UserAnimeRecommendations({back}) {
 
     return (
         <div className="form">
-            <ul>
-                {animeRecommendations.map((anime) => (
-                    <li key={anime.anime_id} className="anime-list-item">
-                        <img src={anime["Image URL"]} alt={anime.name} style={{ width: "130px" }}/>
-                        <p>{anime.Name}</p>
-                    </li>
-                ))}
-            </ul>
+            <h1>User Anime Recommendations</h1>
+            {animeRecommendations.length > 0 && (<div>
+                <p>Here are your recommendations ranked based on your constraints and prior Anime preferences</p>
+                <br/>
+                <ol style={{marginBottom: "40px"}}>
+                    {animeRecommendations.map((anime) => (
+                        <li key={anime.anime_id} >
+                            <div className="anime-list-item" style={{ marginLeft: "20px"}}>
+                                <img src={anime["Image URL"]} alt={anime.name} style={{ width: "250px" }}/>
+                                <div>
+                                    <h2><u>{anime["Name"]}</u></h2>
+                                    <p><b>English Name:</b> {anime["English name"]}</p>
+                                    <p><b>Score:</b> {anime["Score"]}</p>
+                                    <p><b>Genres:</b> {anime["Genres"]}</p>
+                                    <p><b>Synopsis:</b> {anime["Synopsis"]}</p>
+                                    <p><b>Type:</b> {anime["Type"]}</p>
+                                    <p><b>Episodes:</b> {Math.round(anime["Episodes"])}</p>
+                                    <p><b>Aired:</b> {anime["Aired"]}</p>
+                                </div>
+                            </div>
+                        </li>
+                    ))}
+                </ol>
+            </div>)}
+            {animeRecommendations.length < 1 && (
+                <div>
+                    <p>
+                        Sorry, there are no recommendations based on your 
+                        constraints and existing Anime preferences. Try going 
+                        back and changing your inputs or refresh the webpage
+                    </p>
+                </div>
+            )}
             <button onClick={back}>Back</button>
         </div>
     );

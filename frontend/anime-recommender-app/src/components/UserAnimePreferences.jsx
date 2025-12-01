@@ -45,7 +45,7 @@ function UserAnimePreferences({next, back}) {
     <div className="form">
       <h1>User Anime Preferences</h1>
 
-      <p>Give a thumbs up or thumbs down for Animes you already like or dislike</p>
+      <p>Give a thumbs up or thumbs down for Animes you already like or dislike. If there are none, press 'Next' all the way at the bottom to continue</p>
 
       <div style={{
         display: "flex",

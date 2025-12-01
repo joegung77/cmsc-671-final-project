@@ -34,7 +34,7 @@ function UserAnimeConstraints({next, back}) {
         <div className="form">
             <h1>User Anime Constraints</h1>
 
-            <p>Define constraints for your Anime recommendations</p>
+            <p>Define constraints for your Anime recommendations or press 'Next' at the bottom to continue</p>
 
             <p>
                 Genre:

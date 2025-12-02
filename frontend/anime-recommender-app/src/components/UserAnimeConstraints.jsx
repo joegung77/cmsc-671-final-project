@@ -1,21 +1,18 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { GlobalContext } from '../GlobalState';
+import { UserAnimeDataContext } from '../UserAnimeData';
 
 function UserAnimeConstraints({next, back}) {
     const [availableGenreList, setAvailableGenreList] = useState([]);
     const [availableTypeList, setAvailableTypeList] = useState([]);
 
-    const { genreList, setGenreList} = useContext(GlobalContext);
-    const { minScore, setMinScore} = useContext(GlobalContext);
-    const { maxScore, setMaxScore } = useContext(GlobalContext);
-    const { minEpisodes, setMinEpisodes } = useContext(GlobalContext);
-    const { maxEpisodes, setMaxEpisodes } = useContext(GlobalContext);
-    const { minYear, setMinYear } = useContext(GlobalContext);
-    const { maxYear, setMaxYear } = useContext(GlobalContext);
-    const { typeList, setTypeList } = useContext(GlobalContext);
-    const { minMembers, setMinMembers } = useContext(GlobalContext);
-    const { maxMembers, setMaxMembers } = useContext(GlobalContext);
-    const { minScoredBy, setMinScoredBy } = useContext(GlobalContext);
+    const { genreList, setGenreList} = useContext(UserAnimeDataContext);
+    const { minScore, setMinScore} = useContext(UserAnimeDataContext);
+    const { maxScore, setMaxScore } = useContext(UserAnimeDataContext);
+    const { minEpisodes, setMinEpisodes } = useContext(UserAnimeDataContext);
+    const { maxEpisodes, setMaxEpisodes } = useContext(UserAnimeDataContext);
+    const { minYear, setMinYear } = useContext(UserAnimeDataContext);
+    const { maxYear, setMaxYear } = useContext(UserAnimeDataContext);
+    const { typeList, setTypeList } = useContext(UserAnimeDataContext);
 
 
     useEffect(() => {

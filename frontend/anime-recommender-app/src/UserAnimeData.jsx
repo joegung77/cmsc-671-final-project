@@ -1,8 +1,8 @@
 import React, { createContext, useState } from "react";
 
-export const GlobalContext = createContext();
+export const UserAnimeDataContext = createContext();
 
-export function GlobalProvider({ children }) {
+export function UserAnimeDataProvider({ children }) {
     const [genreList, setGenreList] = useState([])
     const [minScore, setMinScore] = useState(1);
     const [maxScore, setMaxScore] = useState(10);
@@ -17,7 +17,7 @@ export function GlobalProvider({ children }) {
     const [dislikedAnimeNames, setDislikedAnimeNames] = useState([]);
 
     return (
-        <GlobalContext.Provider value={{ 
+        <UserAnimeDataContext.Provider value={{ 
             genreList,
             setGenreList,
             minScore, 
@@ -44,6 +44,6 @@ export function GlobalProvider({ children }) {
             setDislikedAnimeNames
         }}>
             {children}
-        </GlobalContext.Provider>
+        </UserAnimeDataContext.Provider>
     );
 }

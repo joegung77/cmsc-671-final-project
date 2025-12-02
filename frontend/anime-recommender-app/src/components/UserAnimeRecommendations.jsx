@@ -1,19 +1,19 @@
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import "../AnimeRecommender.css";
-import { GlobalContext } from '../GlobalState';
+import { UserAnimeDataContext } from '../UserAnimeData';
 
 function UserAnimeRecommendations({back}) {
-    const { genreList } = useContext(GlobalContext);
-    const { minScore } = useContext(GlobalContext);
-    const { maxScore } = useContext(GlobalContext);
-    const { minEpisodes } = useContext(GlobalContext);
-    const { maxEpisodes } = useContext(GlobalContext);
-    const { minYear } = useContext(GlobalContext);
-    const { maxYear } = useContext(GlobalContext);
-    const { typeList } = useContext(GlobalContext);
-    const { likedAnimes } = useContext(GlobalContext);
-    const { dislikedAnimes } = useContext(GlobalContext);
+    const { genreList } = useContext(UserAnimeDataContext);
+    const { minScore } = useContext(UserAnimeDataContext);
+    const { maxScore } = useContext(UserAnimeDataContext);
+    const { minEpisodes } = useContext(UserAnimeDataContext);
+    const { maxEpisodes } = useContext(UserAnimeDataContext);
+    const { minYear } = useContext(UserAnimeDataContext);
+    const { maxYear } = useContext(UserAnimeDataContext);
+    const { typeList } = useContext(UserAnimeDataContext);
+    const { likedAnimes } = useContext(UserAnimeDataContext);
+    const { dislikedAnimes } = useContext(UserAnimeDataContext);
 
     const [animeRecommendations, setAnimeRecommendations] = useState([]);
     const [loading, setLoading] = useState(true);

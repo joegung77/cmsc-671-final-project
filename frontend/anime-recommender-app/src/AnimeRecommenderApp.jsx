@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import UserWelcome from "./components/UserWelcome";
 import UserAnimeConstraints from "./components/UserAnimeConstraints";
 import UserAnimePreferences from "./components/UserAnimePreferences";
-import { GlobalProvider } from './GlobalState';
+import { UserAnimeDataProvider } from './UserAnimeData';
 import UserAnimeRecommendations from './components/UserAnimeRecommendations';
 
 function AnimeRecommenderApp() {
@@ -13,7 +13,7 @@ function AnimeRecommenderApp() {
 
     return (
         <div>
-            <GlobalProvider>
+            <UserAnimeDataProvider>
                 {form === 0 && (
                     <UserWelcome next={next}/>
                 )}
@@ -26,7 +26,7 @@ function AnimeRecommenderApp() {
                 {form === 3 && (
                     <UserAnimeRecommendations next={next} back={back}/>
                 )}
-            </GlobalProvider>
+            </UserAnimeDataProvider>
         </div>
     );
 }

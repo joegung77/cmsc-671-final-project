@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import "../AnimeRecommender.css";
 import LikeIcon from "../icons/thumbs_up.png";
 import DislikeIcon from "../icons/thumbs_down.png";
-import { GlobalContext } from '../GlobalState';
+import { UserAnimeDataContext } from '../UserAnimeData';
 
 function UserAnimePreferences({next, back}) {
   const [search, setSearch] = useState("");
@@ -10,10 +10,10 @@ function UserAnimePreferences({next, back}) {
   const [animeList, setAnimeList] = useState([]);
   const [filteredAnimeList, setFilteredAnimeList] = useState([]);
 
-  const { likedAnimes, setLikedAnimes } = useContext(GlobalContext);
-  const { dislikedAnimes, setDislikedAnimes } = useContext(GlobalContext);
-  const { likedAnimeNames, setLikedAnimeNames } = useContext(GlobalContext);
-  const { dislikedAnimeNames, setDislikedAnimeNames } = useContext(GlobalContext);
+  const { likedAnimes, setLikedAnimes } = useContext(UserAnimeDataContext);
+  const { dislikedAnimes, setDislikedAnimes } = useContext(UserAnimeDataContext);
+  const { likedAnimeNames, setLikedAnimeNames } = useContext(UserAnimeDataContext);
+  const { dislikedAnimeNames, setDislikedAnimeNames } = useContext(UserAnimeDataContext);
 
   useEffect(() => {
     fetch("http://127.0.0.1:8000/anime")
